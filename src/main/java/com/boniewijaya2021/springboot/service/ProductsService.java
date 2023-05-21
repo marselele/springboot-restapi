@@ -1,7 +1,9 @@
 package com.boniewijaya2021.springboot.service;
 
 import com.boniewijaya2021.springboot.entity.TblProducts;
+import com.boniewijaya2021.springboot.pojo.ProductsPojo;
 import com.boniewijaya2021.springboot.repository.ProductsRepository;
+import com.boniewijaya2021.springboot.repository.ProductsRepositoryClass;
 import com.boniewijaya2021.springboot.utility.MessageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,15 +17,85 @@ public class ProductsService {
     @Autowired
     private ProductsRepository productsRepository;
 
+    @Autowired
+    private ProductsRepositoryClass productsRepositoryClass;
 
-    //GET
 
-    public ResponseEntity getDataBarang() {
-        List<TblProducts> tblProducts = (List<TblProducts>) productsRepository.findAll();
-        if (!tblProducts.isEmpty()) {
-            return ResponseEntity.ok(tblProducts);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No data found");
+    public ResponseEntity getBarangClass(String namaBarang, String tipeBarang) {
+        Map<String, Object> result = new HashMap<>();
+        MessageModel msg = new MessageModel();
+        try {
+            List<ProductsPojo> data = productsRepositoryClass.getDataDinamic(namaBarang, tipeBarang);
+            if (data.isEmpty()) {
+                msg.setStatus(true);
+                msg.setMessage("data tidak ditemukan");
+                msg.setData(null);
+                return ResponseEntity.ok().body(msg);
+            } else {
+                msg.setStatus(true);
+                msg.setMessage("Success");
+                result.put("data", data);
+                msg.setData(result);
+                return ResponseEntity.ok().body(msg);
+            }
+
+        } catch (Exception e) {
+            msg.setStatus(false);
+            msg.setMessage(e.getMessage());
+            return ResponseEntity.ok().body(msg);
+
+        }
+    }
+
+    public ResponseEntity createBarangClass(ProductsPojo product) {
+        MessageModel msg = new MessageModel();
+        try {
+
+            productsRepositoryClass.createData(product);
+            msg.setStatus(true);
+            msg.setMessage("Data created successfully");
+            msg.setData(null);
+
+            return ResponseEntity.ok().body(msg);
+        } catch (Exception e) {
+            msg.setStatus(false);
+            msg.setMessage(e.getMessage());
+
+            return ResponseEntity.ok().body(msg);
+        }
+    }
+
+    public ResponseEntity updateBarangClass(ProductsPojo product) {
+        MessageModel msg = new MessageModel();
+        try {
+
+            productsRepositoryClass.updateData(product);
+
+            msg.setStatus(true);
+            msg.setMessage("Data updated successfully");
+            msg.setData(null);
+
+            return ResponseEntity.ok().body(msg);
+        } catch (Exception e) {
+            msg.setStatus(false);
+            msg.setMessage(e.getMessage());
+
+            return ResponseEntity.ok().body(msg);
+        }
+    }
+
+    public ResponseEntity deleteBarangClass(String idProduksi) {
+        MessageModel msg = new MessageModel();
+        try {
+            productsRepositoryClass.deleteData(idProduksi);
+            msg.setStatus(true);
+            msg.setMessage("Data deleted successfully");
+            msg.setData(null);
+            return ResponseEntity.ok().body(msg);
+        } catch (Exception e) {
+            msg.setStatus(false);
+            msg.setMessage(e.getMessage());
+            return ResponseEntity.ok().body(msg);
         }
     }
 
@@ -39,6 +111,16 @@ public class ProductsService {
 //        }
 //    }
 
+//GET
+
+    public ResponseEntity getDataBarang() {
+        List<TblProducts> tblProducts = (List<TblProducts>) productsRepository.findAll();
+        if (!tblProducts.isEmpty()) {
+            return ResponseEntity.ok(tblProducts);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No data found");
+        }
+    }
 
     //CREATE UPDATE
     public ResponseEntity<MessageModel> addDataBarang(TblProducts tblProducts) {

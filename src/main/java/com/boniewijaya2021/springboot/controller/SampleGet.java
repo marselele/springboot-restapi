@@ -2,6 +2,7 @@ package com.boniewijaya2021.springboot.controller;
 
 import com.boniewijaya2021.springboot.entity.TblProducts;
 import com.boniewijaya2021.springboot.entity.TblSales;
+import com.boniewijaya2021.springboot.pojo.ProductsPojo;
 import com.boniewijaya2021.springboot.pojo.UsersPostPojo;
 import com.boniewijaya2021.springboot.service.ProductsService;
 import com.boniewijaya2021.springboot.service.SalesPostService;
@@ -79,4 +80,24 @@ public class SampleGet {
         return responseEntity;
     }
 
+    @GetMapping("/get/barangClass")
+    public ResponseEntity getBarangClass(@RequestParam(value = "namaBarang", required = false) String namaBarang,
+                                         @RequestParam(value = "tipeBarang", required = false) String tipeBarang) {
+        return productsService.getBarangClass(namaBarang, tipeBarang);
+    }
+
+    @PostMapping
+    public ResponseEntity createBarang(@RequestBody ProductsPojo product) {
+        return productsService.createBarangClass(product);
+    }
+
+    @PutMapping
+    public ResponseEntity updateBarang(@RequestBody ProductsPojo product) {
+        return productsService.updateBarangClass(product);
+    }
+
+    @DeleteMapping("/{idProduksi}")
+    public ResponseEntity deleteBarang(@PathVariable String idProduksi) {
+        return productsService.deleteBarangClass(idProduksi);
+    }
 }
