@@ -9,7 +9,7 @@ import java.util.UUID;
 @Setter
 @Getter
 public class ProductsPojo {
-    private UUID idProduksi;
+    private String idProduksi;
     private String namaBarang;
     private String tipeBarang;
     private String asalBarang;

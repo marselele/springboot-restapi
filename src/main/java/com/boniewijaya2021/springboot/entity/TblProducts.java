@@ -39,5 +39,10 @@ public class TblProducts implements Serializable {
     @Column(name = "biaya_produksi", nullable = false)
     private Integer biayaProduksi;
 
+//    String QueryText = "SELECT cast (id_produksi as varchar) id_produksi, nama_barang, tipe_barang, asal_barang, tanggal_produksi, biaya_produksi\n" +
+//                "FROM sample.tbl_products  WHERE 1=1 \n" + sisipan;
+
 
 }
+
+
