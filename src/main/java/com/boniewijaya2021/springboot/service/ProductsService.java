@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @Service
@@ -44,58 +45,6 @@ public class ProductsService {
             msg.setMessage(e.getMessage());
             return ResponseEntity.ok().body(msg);
 
-        }
-    }
-
-    public ResponseEntity createBarangClass(ProductsPojo product) {
-        MessageModel msg = new MessageModel();
-        try {
-
-            productsRepositoryClass.createData(product);
-            msg.setStatus(true);
-            msg.setMessage("Data created successfully");
-            msg.setData(null);
-
-            return ResponseEntity.ok().body(msg);
-        } catch (Exception e) {
-            msg.setStatus(false);
-            msg.setMessage(e.getMessage());
-
-            return ResponseEntity.ok().body(msg);
-        }
-    }
-
-    public ResponseEntity updateBarangClass(ProductsPojo product) {
-        MessageModel msg = new MessageModel();
-        try {
-
-            productsRepositoryClass.updateData(product);
-
-            msg.setStatus(true);
-            msg.setMessage("Data updated successfully");
-            msg.setData(null);
-
-            return ResponseEntity.ok().body(msg);
-        } catch (Exception e) {
-            msg.setStatus(false);
-            msg.setMessage(e.getMessage());
-
-            return ResponseEntity.ok().body(msg);
-        }
-    }
-
-    public ResponseEntity deleteBarangClass(String idProduksi) {
-        MessageModel msg = new MessageModel();
-        try {
-            productsRepositoryClass.deleteData(idProduksi);
-            msg.setStatus(true);
-            msg.setMessage("Data deleted successfully");
-            msg.setData(null);
-            return ResponseEntity.ok().body(msg);
-        } catch (Exception e) {
-            msg.setStatus(false);
-            msg.setMessage(e.getMessage());
-            return ResponseEntity.ok().body(msg);
         }
     }
 

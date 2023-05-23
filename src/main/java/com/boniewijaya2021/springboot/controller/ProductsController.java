@@ -2,6 +2,9 @@ package com.boniewijaya2021.springboot.controller;
 
 import com.boniewijaya2021.springboot.entity.TblProducts;
 import com.boniewijaya2021.springboot.pojo.ProductsPojo;
+import com.boniewijaya2021.springboot.pojo.ProductsPostPojo;
+import com.boniewijaya2021.springboot.pojo.UsersPostPojo;
+import com.boniewijaya2021.springboot.service.ProductsPostService;
 import com.boniewijaya2021.springboot.service.ProductsService;
 import com.boniewijaya2021.springboot.utility.MessageModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@RestController
+@RequestMapping("/api/products")
 public class ProductsController {
     @Autowired
     private ProductsService productsService;
+
+    @Autowired
+    private ProductsPostService productsPostService;
 
     // repo interface
     @GetMapping("/get/dataBarang")
@@ -42,17 +50,23 @@ public class ProductsController {
     }
 
     @PostMapping("/post/dataBarangClass")
-    public ResponseEntity createBarang(@RequestBody ProductsPojo product) {
-        return productsService.createBarangClass(product);
+    private ResponseEntity<MessageModel> addBarangClass(@RequestBody ProductsPostPojo productsPostPojo) {
+        ResponseEntity responseEntity = productsPostService.addBarangClass(productsPostPojo);
+        return responseEntity;
     }
 
-    @PutMapping("/put/dataBarangClass")
-    public ResponseEntity updateBarang(@RequestBody ProductsPojo product) {
-        return productsService.updateBarangClass(product);
-    }
-
-    @DeleteMapping("/delete/dataBarangClass/{idProduksi}")
-    public ResponseEntity deleteBarang(@PathVariable String idProduksi) {
-        return productsService.deleteBarangClass(idProduksi);
-    }
+//    @PostMapping("/post/dataBarangClass")
+//    public ResponseEntity createBarang(@RequestBody ProductsPojo product) {
+//        return productsService.createBarangClass(product);
+//    }
+//
+//    @PutMapping("/put/dataBarangClass")
+//    public ResponseEntity updateBarang(@RequestBody ProductsPojo product) {
+//        return productsService.updateBarangClass(product);
+//    }
+//
+//    @DeleteMapping("/delete/dataBarangClass/{idProduksi}")
+//    public ResponseEntity deleteBarang(@PathVariable String idProduksi) {
+//        return productsService.deleteBarangClass(idProduksi);
+//    }
 }

@@ -2,10 +2,11 @@ package com.boniewijaya2021.springboot.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 @Setter
@@ -33,8 +34,10 @@ public class TblProducts implements Serializable {
     @Column(name = "asal_barang", nullable = false)
     private String asalBarang;
 
-    @Column(name = "tanggal_produksi")
-    private Timestamp tanggalProduksi;
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date tanggalProduksi;
 
     @Column(name = "biaya_produksi", nullable = false)
     private Integer biayaProduksi;

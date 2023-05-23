@@ -3,8 +3,6 @@ package com.boniewijaya2021.springboot.pojo;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
-import java.util.UUID;
 
 @Setter
 @Getter

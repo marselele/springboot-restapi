@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface ProductsRepository extends JpaRepository<TblProducts, UUID> {
 
+
 }
