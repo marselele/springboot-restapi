@@ -24,9 +24,6 @@ public class SampleGet {
     @Autowired
     private SalesPostService salesPostService;
 
-    @Autowired
-    private ProductsService productsService;
-
 
     //    public ResponseEntity getDataBarang(@RequestParam UUID idProduksi) {
 //        ResponseEntity responseEntity = productsService.getDataBarang(idProduksi);
@@ -37,23 +34,7 @@ public class SampleGet {
 //        ResponseEntity responseEntity = productsService.getDataBarang(idProduksi);
 //        return responseEntity;
 //    }
-    @GetMapping("/get/dataBarang")
-    public ResponseEntity getDataBarang() {
-        ResponseEntity responseEntity = productsService.getDataBarang();
-        return responseEntity;
-    }
 
-    @PostMapping("/post/dataBarang")
-    private ResponseEntity<MessageModel> addDataBarang(@RequestBody TblProducts tblProducts) {
-        ResponseEntity responseEntity = productsService.addDataBarang(tblProducts);
-        return responseEntity;
-    }
-
-    @DeleteMapping("/delete/dataBarang/{idProduksi}")
-    public ResponseEntity removeDataBarang(@PathVariable("idProduksi") UUID idProduksi) {
-        ResponseEntity responseEntity = productsService.removeDataBarang(idProduksi);
-        return responseEntity;
-    }
 
     @GetMapping("/get/dataPenjualan")
     public ResponseEntity getDataPenjualan(@RequestParam UUID idSales) {
@@ -80,24 +61,5 @@ public class SampleGet {
         return responseEntity;
     }
 
-    @GetMapping("/get/barangClass")
-    public ResponseEntity getBarangClass(@RequestParam(value = "namaBarang", required = false) String namaBarang,
-                                         @RequestParam(value = "tipeBarang", required = false) String tipeBarang) {
-        return productsService.getBarangClass(namaBarang, tipeBarang);
-    }
 
-    @PostMapping
-    public ResponseEntity createBarang(@RequestBody ProductsPojo product) {
-        return productsService.createBarangClass(product);
-    }
-
-    @PutMapping
-    public ResponseEntity updateBarang(@RequestBody ProductsPojo product) {
-        return productsService.updateBarangClass(product);
-    }
-
-    @DeleteMapping("/{idProduksi}")
-    public ResponseEntity deleteBarang(@PathVariable String idProduksi) {
-        return productsService.deleteBarangClass(idProduksi);
-    }
 }

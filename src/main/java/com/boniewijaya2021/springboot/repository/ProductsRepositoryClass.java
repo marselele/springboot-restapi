@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +34,7 @@ public class ProductsRepositoryClass {
         String sisipan = qb.toString();
 
 
-        String QueryText = "SELECT cast (id_produksi as varchar) id_produksi, nama_barang, tipe_barang, asal_barang, tanggal_produksi, biaya_produksi\n" +
+        String QueryText = "SELECT cast (id_produksi as varchar) id_produksi, nama_barang, tipe_barang, asal_barang, tanggal_produksi, cast (biaya_produksi as varchar)biaya_produksi\n" +
                 "FROM sample.tbl_products  WHERE 1=1 \n" + sisipan;
 
         Query query = entityManager.createNativeQuery(QueryText);
@@ -53,58 +54,62 @@ public class ProductsRepositoryClass {
             ProductsPojo browse = new ProductsPojo();
             Object[] obj = (Object[]) itr.next();
             String idProduksi = String.valueOf(obj[0]);
-            Integer biayaProduksi = Integer.valueOf((Integer) obj[1]);
-            namaBarang = String.valueOf(obj[2]);
-            tipeBarang = String.valueOf(obj[3]);
+            String namaBarangs = String.valueOf(obj[1]);
+            String tipeBarangs = String.valueOf(obj[2]);
+            String asalBarang = String.valueOf(obj[3]);
+            String tanggalProduksi = String.valueOf(obj[4]);
+            Integer biayaProduksi = Integer.valueOf((String) obj[5]);
+
 
             browse.setIdProduksi(idProduksi);
+            browse.setNamaBarang(namaBarangs);
+            browse.setTipeBarang(tipeBarangs);
+            browse.setAsalBarang(asalBarang);
+            browse.setTanggalProduksi(tanggalProduksi);
             browse.setBiayaProduksi(biayaProduksi);
-            browse.setNamaBarang(namaBarang);
-            browse.setTipeBarang(tipeBarang);
             result.add(browse);
         }
         return result;
     }
-
-    public void createData(ProductsPojo product) {
-        String QueryText = "INSERT INTO sample.tbl_products (nama_barang, tipe_barang, asal_barang, tanggal_produksi, biaya_produksi) " +
-                "VALUES (:namaBarang, :tipeBarang, :asalBarang, :tanggalProduksi, :biayaProduksi)";
-
-        Query query = entityManager.createNativeQuery(QueryText);
-        query.setParameter("namaBarang", product.getNamaBarang());
-        query.setParameter("tipeBarang", product.getTipeBarang());
-        query.setParameter("asalBarang", product.getAsalBarang());
-        query.setParameter("tanggalProduksi", product.getTanggalProduksi());
-        query.setParameter("biayaProduksi", product.getBiayaProduksi());
-
-        query.executeUpdate();
-    }
-
-    public void updateData(ProductsPojo product) {
-        String QueryText = "UPDATE sample.tbl_products " +
-                "SET nama_barang = :namaBarang, tipe_barang = :tipeBarang, asal_barang = :asalBarang, " +
-                "tanggal_produksi = :tanggalProduksi, biaya_produksi = :biayaProduksi " +
-                "WHERE id_produksi = :idProduksi";
-
-        Query query = entityManager.createNativeQuery(QueryText);
-        query.setParameter("namaBarang", product.getNamaBarang());
-        query.setParameter("tipeBarang", product.getTipeBarang());
-        query.setParameter("asalBarang", product.getAsalBarang());
-        query.setParameter("tanggalProduksi", product.getTanggalProduksi());
-        query.setParameter("biayaProduksi", product.getBiayaProduksi());
-        query.setParameter("idProduksi", product.getIdProduksi());
-
-        query.executeUpdate();
-    }
-
-    public void deleteData(String idProduksi) {
-        String QueryText = "DELETE FROM sample.tbl_products WHERE id_produksi = :idProduksi";
-
-        Query query = entityManager.createNativeQuery(QueryText);
-        query.setParameter("idProduksi", idProduksi);
-
-        query.executeUpdate();
-    }
-
-
 }
+
+//    public void createData(ProductsPojo product) {
+//        String QueryText = "INSERT INTO sample.tbl_products (nama_barang, tipe_barang, asal_barang, tanggal_produksi, biaya_produksi) " +
+//                "VALUES (:namaBarang, :tipeBarang, :asalBarang, :tanggalProduksi, :biayaProduksi)";
+//
+//        Query query = entityManager.createNativeQuery(QueryText);
+//        query.setParameter("namaBarang", product.getNamaBarang());
+//        query.setParameter("tipeBarang", product.getTipeBarang());
+//        query.setParameter("asalBarang", product.getAsalBarang());
+//        query.setParameter("tanggalProduksi", new Timestamp(System.currentTimeMillis()));
+//        query.setParameter("biayaProduksi", product.getBiayaProduksi());
+//        query.executeUpdate();
+//    }
+//
+//    public void updateData(ProductsPojo product) {
+//        String QueryText = "UPDATE sample.tbl_products " +
+//                "SET nama_barang = :namaBarang, tipe_barang = :tipeBarang, asal_barang = :asalBarang, " +
+//                "tanggal_produksi = :tanggalProduksi, biaya_produksi = :biayaProduksi " +
+//                "WHERE id_produksi = :idProduksi";
+//
+//        Query query = entityManager.createNativeQuery(QueryText);
+//        query.setParameter("namaBarang", product.getNamaBarang());
+//        query.setParameter("tipeBarang", product.getTipeBarang());
+//        query.setParameter("asalBarang", product.getAsalBarang());
+//        query.setParameter("tanggalProduksi", product.getTanggalProduksi());
+//        query.setParameter("biayaProduksi", product.getBiayaProduksi());
+//        query.setParameter("idProduksi", product.getIdProduksi());
+//
+//        query.executeUpdate();
+//    }
+
+//    public void deleteData(String idProduksi) {
+//        String QueryText = "DELETE FROM sample.tbl_products WHERE id_produksi = :idProduksi";
+//
+//        Query query = entityManager.createNativeQuery(QueryText);
+//        query.setParameter("idProduksi", idProduksi);
+//
+//        query.executeUpdate();
+//    }
+//
+//}

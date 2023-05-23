@@ -20,7 +20,7 @@ public class ProductsService {
     @Autowired
     private ProductsRepositoryClass productsRepositoryClass;
 
-
+    //  Repo Class
     public ResponseEntity getBarangClass(String namaBarang, String tipeBarang) {
         Map<String, Object> result = new HashMap<>();
         MessageModel msg = new MessageModel();
@@ -111,7 +111,8 @@ public class ProductsService {
 //        }
 //    }
 
-//GET
+
+// Repo Interface
 
     public ResponseEntity getDataBarang() {
         List<TblProducts> tblProducts = (List<TblProducts>) productsRepository.findAll();
@@ -122,7 +123,6 @@ public class ProductsService {
         }
     }
 
-    //CREATE UPDATE
     public ResponseEntity<MessageModel> addDataBarang(TblProducts tblProducts) {
         Map<String, Object> result = new HashMap<>();
         MessageModel msg = new MessageModel();
@@ -143,7 +143,6 @@ public class ProductsService {
         }
     }
 
-    // DELETE
     public ResponseEntity<MessageModel> removeDataBarang(UUID idProduksi) {
         MessageModel msg = new MessageModel();
         try {

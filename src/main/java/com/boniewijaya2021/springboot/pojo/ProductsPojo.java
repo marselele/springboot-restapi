@@ -13,6 +13,6 @@ public class ProductsPojo {
     private String namaBarang;
     private String tipeBarang;
     private String asalBarang;
-    private Timestamp tanggalProduksi;
+    private String tanggalProduksi;
     private Integer biayaProduksi;
 }

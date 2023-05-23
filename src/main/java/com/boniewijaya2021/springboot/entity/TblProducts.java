@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tbl_products", schema = "sample")
+@Table(name = "tbl_products", schema = "exercise")
 public class TblProducts implements Serializable {
 
     @Id
