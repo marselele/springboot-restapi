@@ -12,8 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -28,23 +28,21 @@ public class ProductsPostService {
     @Autowired
     private ProductsRepositoryClass productsRepositoryClass;
 
-    public ResponseEntity<MessageModel> addBarangClass(ProductsPostPojo productsPostPojo) {
+    public ResponseEntity<MessageModel> addBarangClass(ProductsPojo productsPojo) {
         Map<String, Object> result = new HashMap<>();
         MessageModel msg = new MessageModel();
 
         try {
-            TblProducts tblProducts = new TblProducts();
-            tblProducts.setNamaBarang(productsPostPojo.getNamaBarang());
-            tblProducts.setTipeBarang(productsPostPojo.getTipeBarang());
-            tblProducts.setAsalBarang(productsPostPojo.getAsalBarang());
-            tblProducts.setTanggalProduksi(productsPostPojo.getTanggalProduksi());
-            tblProducts.setBiayaProduksi(productsPostPojo.getBiayaProduksi());
-            productsRepository.save(tblProducts);
+            if (productsPojo.getTanggalProduksi() == null) {
+                productsPojo.setTanggalProduksi(LocalDateTime.now());
+            }
+            productsRepositoryClass.insertDataBarang(productsPojo);
             msg.setStatus(true);
             msg.setMessage("Success");
-            result.put("data", tblProducts);
+            result.put("data", productsPojo);
             msg.setData(result);
             return ResponseEntity.status(HttpStatus.OK).body(msg);
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,5 +52,43 @@ public class ProductsPostService {
         }
     }
 
+    public ResponseEntity<MessageModel> updateBarangClass(ProductsPojo productsPojo) {
+        Map<String, Object> result = new HashMap<>();
+        MessageModel msg = new MessageModel();
+
+        try {
+            if (productsPojo.getTanggalProduksi() == null) {
+                productsPojo.setTanggalProduksi(LocalDateTime.now());
+            }
+            productsRepositoryClass.updateDataBarang(productsPojo);
+            msg.setStatus(true);
+            msg.setMessage("Success");
+            result.put("data", productsPojo);
+            msg.setData(result);
+            return ResponseEntity.status(HttpStatus.OK).body(msg);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setStatus(false);
+            msg.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+        }
+
+    }
+
+    public ResponseEntity deleteBarangClass(UUID idProduksi) {
+        MessageModel msg = new MessageModel();
+        try {
+            productsRepositoryClass.deleteDataBarang(idProduksi);
+            msg.setStatus(true);
+            msg.setMessage("Data Deleted");
+            return ResponseEntity.ok().body(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setStatus(false);
+            msg.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+        }
+    }
 
 }

@@ -23,23 +23,24 @@ public class ProductsController {
     private ProductsPostService productsPostService;
 
     // repo interface
-    @GetMapping("/get/dataBarang")
-    public ResponseEntity getDataBarang() {
-        ResponseEntity responseEntity = productsService.getDataBarang();
-        return responseEntity;
-    }
 
-    @PostMapping("/post/dataBarang")
-    private ResponseEntity<MessageModel> addDataBarang(@RequestBody TblProducts tblProducts) {
-        ResponseEntity responseEntity = productsService.addDataBarang(tblProducts);
-        return responseEntity;
-    }
-
-    @DeleteMapping("/delete/dataBarang/{idProduksi}")
-    public ResponseEntity removeDataBarang(@PathVariable("idProduksi") UUID idProduksi) {
-        ResponseEntity responseEntity = productsService.removeDataBarang(idProduksi);
-        return responseEntity;
-    }
+//    @GetMapping("/get/dataBarang")
+//    public ResponseEntity getDataBarang() {
+//        ResponseEntity responseEntity = productsService.getDataBarang();
+//        return responseEntity;
+//    }
+//
+//    @PostMapping("/post/dataBarang")
+//    private ResponseEntity<MessageModel> addDataBarang(@RequestBody TblProducts tblProducts) {
+//        ResponseEntity responseEntity = productsService.addDataBarang(tblProducts);
+//        return responseEntity;
+//    }
+//
+//    @DeleteMapping("/delete/dataBarang/{idProduksi}")
+//    public ResponseEntity removeDataBarang(@PathVariable("idProduksi") UUID idProduksi) {
+//        ResponseEntity responseEntity = productsService.removeDataBarang(idProduksi);
+//        return responseEntity;
+//    }
 
     // repo class
 
@@ -50,23 +51,23 @@ public class ProductsController {
     }
 
     @PostMapping("/post/dataBarangClass")
-    private ResponseEntity<MessageModel> addBarangClass(@RequestBody ProductsPostPojo productsPostPojo) {
-        ResponseEntity responseEntity = productsPostService.addBarangClass(productsPostPojo);
+    private ResponseEntity<MessageModel> addBarangClass(@RequestBody ProductsPojo productsPojo) {
+        ResponseEntity responseEntity = productsPostService.addBarangClass(productsPojo);
         return responseEntity;
     }
 
-//    @PostMapping("/post/dataBarangClass")
-//    public ResponseEntity createBarang(@RequestBody ProductsPojo product) {
-//        return productsService.createBarangClass(product);
-//    }
-//
-//    @PutMapping("/put/dataBarangClass")
-//    public ResponseEntity updateBarang(@RequestBody ProductsPojo product) {
-//        return productsService.updateBarangClass(product);
-//    }
-//
-//    @DeleteMapping("/delete/dataBarangClass/{idProduksi}")
-//    public ResponseEntity deleteBarang(@PathVariable String idProduksi) {
-//        return productsService.deleteBarangClass(idProduksi);
-//    }
+    @PutMapping("/put/dataBarangClass")
+    public ResponseEntity<MessageModel> updateBarang(@RequestBody ProductsPojo productsPojo) {
+        ResponseEntity responseEntity = productsPostService.updateBarangClass(productsPojo);
+        return responseEntity;
+    }
+
+
+    @DeleteMapping("/delete/dataBarangClass/{idProduksi}")
+    public ResponseEntity removeBarangClass(@PathVariable("idProduksi") UUID idProduksi) {
+        ResponseEntity responseEntity = productsPostService.deleteBarangClass(idProduksi);
+        return responseEntity;
+    }
+
+
 }
